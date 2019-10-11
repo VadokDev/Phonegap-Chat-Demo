@@ -1,57 +1,119 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
         <title>Chat Demo</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css">
     </head>
     <body>
-    	<section id="login">
-    		<div class="container">
-    			<div class="row">
-    				<div class="col"></div>
-    				<div class="col">
-    					<form id="loginForm">
-    						<div class="form-group">
-    							<label for="nombre">Nombre</label>
-    							<input type="text" class="form-control" name="nombre">
-    						</div>
-    						<div class="row">
-    							<div class="col"></div>
-    							<div class="col">
-    								<button class="btn btn-primary">Entrar</button>	
-    							</div>
-    							<div class="col"></div>
-    						</div>
-    					</form>
-    				</div>
-    				<div class="col"></div>
-    			</div>
-    		</div>
-    	</section>
-    
-	    <section id="navbar">
-	    	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="#">Super Chat</a>
-				<span class="ml-auto mr-15">Hola Gonzalo!</span>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
 
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							Salir
-						</li>
-					</ul>
+		<section id="login">
+			<div class="container">
+				<div class="row">
+					<div class="col"></div>
+					<div class="col">
+						<form id="loginForm">
+							<div class="form-group">
+								<label>Nombre</label>
+								<input type="text" class="form-control">
+								<div class="row">
+									<div class="col"></div>
+									<div class="col-">
+										<button class="btn-success btn">Hola</button>
+									</div>
+									<div class="col"></div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col"></div>
 				</div>
-	    	</nav>
-	    </section>
-    
-        <script type="text/javascript" src="cordova.js"></script>
-    	<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
-    	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    </body>
+			</div>
+		</section>
+
+		<section id="menu">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			  <a class="navbar-brand" href="#">Navbar</a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+
+			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mr-auto">
+			      <li class="nav-item active">
+			        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" href="#">Link</a>
+			      </li>
+			      <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          Dropdown
+			        </a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			          <a class="dropdown-item" href="#">Action</a>
+			          <a class="dropdown-item" href="#">Another action</a>
+			          <div class="dropdown-divider"></div>
+			          <a class="dropdown-item" href="#">Something else here</a>
+			        </div>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+			      </li>
+			    </ul>
+			    <form class="form-inline my-2 my-lg-0">
+			      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+			      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			    </form>
+			  </div>
+			</nav>
+		</section>
+
+		<section id="chat">
+			<div class="row">
+				<div class="card" style="width: 18rem;">
+				  <div class="card-body">
+				    <h6 class="card-subtitle mb-2 text-muted">Gonzalo Fernández</h6>
+				    <hr>
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				  </div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card ml-auto" style="width: 18rem;">
+				  <div class="card-body">
+				    <h6 class="card-subtitle mb-2 text-muted">Gonzalo Fernández</h6>
+				    <hr>
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				  </div>
+				</div>
+			</div>
+		</section>
+
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+		<script>
+			$( document ).ready(function() {
+				var nombre;
+				$.post( "http://api.vadok.dev:8000/v1/mensaje/mensaje", JSON.stringify({user: "chalito", mensaje: "It's me, Chalito"}), function( data ) {
+				  console.log( data );
+				});
+
+				$.ajax({
+				        type: "POST",
+				        url: "http://api.vadok.dev:8000/v1/mensaje/mensaje",
+				        data: JSON.stringify({"user": "chalito", "mensaje": "It's me, Chalito"}),
+				        contentType: "application/json; charset=utf-8",
+				        dataType: "json",
+				        success: function(data){alert(data);},
+				        failure: function(errMsg) {
+				            alert(errMsg);
+				        }
+				  });
+			});
+		</script>
+	</body>
 </html>
