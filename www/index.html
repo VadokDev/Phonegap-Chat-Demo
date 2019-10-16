@@ -8,48 +8,79 @@
     </head>
     <body>
 
+		<section id="chat">
+			
+		</section>
+
     	<form>
     		<input type="text" id="mensaje_escribir">
     		<button class="btn btn-primary">Enviar</button>
     	</form>
 
-    	<div id="asd">
-    		
-    	</div>
+
+		<div id="asd">
+			
+		</div>
 		
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
 		<script>
-			$( document ).ready(function() {
-				$("form").submit(function(e) {
-					e.preventDefault();
+			var ultimoChat = 0;
+			function chatCallBack(data) {
+				for (var i = data.length - 1; i >= 0; i--) {
+	        		$("#chat").append(' \
+	        			<div class="card" style="width: 18rem;"> \
+						  <div class="card-body"> \
+						    <h6 class="card-subtitle mb-2 text-muted">'+data[i].user+'</h6> \
+						    <hr> \
+						    <p class="card-text">'+data[i].mensaje+'</p> \
+						  </div> \
+						</div>');
+	        		ultimoChat = data[i].id;
+	        	}
+			}
+			function recargarChat() {
+	        	$.ajax({
+	                type: "GET",
+	                url: "http://api.vadok.dev:8000/v1/mensaje/" + ultimoChat,
+	                success: function(data){
+	                	chatCallBack(data);
+	                },
+	                failure: function(errMsg) {
+	                    alert(errMsg);
+	                }
+	          	});
+		    }
+		    //setInterval(recargarChat, 3000);
 
-					let a = $("#mensaje_escribir").val();
+			$("form").submit(function(e) {
+				e.preventDefault();
 
-					$.ajax({
-						type: "POST",
-						url: "http://api.vadok.dev:8000/v1/mensaje/mensaje",
-						data: JSON.stringify({"user": "cHALO", "mensaje": a}),
-						contentType: "application/json; charset=utf-8",
-		                dataType: "json",
-		                success: function(data){
-        					$.ajax({
-        				        type: "GET",
-        				        url: "http://api.vadok.dev:8000/v1/mensaje/0",
-        				        success: function(data){
-        				        	$("#asd").html(JSON.stringify(data));
-        				        },
-        				        failure: function(errMsg) {
-        				            alert(errMsg);
-        				        }
-        				  	});
-		                },
-		                failure: function(errMsg) {
-		                    alert(errMsg);
-		                }
-					});
+				let a = $("#mensaje_escribir").val();
+
+				$.ajax({
+					type: "POST",
+					url: "http://api.vadok.dev:8000/v1/mensaje/mensaje",
+					data: JSON.stringify({"user": "cHALO", "mensaje": a}),
+					contentType: "application/json; charset=utf-8",
+	                dataType: "json",
+	                success: function(data){
+    					$.ajax({
+    				        type: "GET",
+    				        url: "http://api.vadok.dev:8000/v1/mensaje/0",
+    				        success: function(data){
+    				        	$("#asd").html(JSON.stringify(data));
+    				        },
+    				        failure: function(errMsg) {
+    				            alert(errMsg);
+    				        }
+    				  	});
+	                },
+	                failure: function(errMsg) {
+	                    alert(errMsg);
+	                }
 				});
 			});
 		</script>
